@@ -17,4 +17,4 @@ class Util:
         return self.weight / (self.get_meter_height() ** 2)  # BMI = 体重 / 身長(m)^2
     
     def standardBMI(self):
-        return (self.height/100) **2 * 22, (self.height/100) **2 * 20
+        return f"{(self.height/100) **2 * 22:.0f}", f"{(self.height/100) **2 * 20:.0f}"

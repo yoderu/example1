@@ -28,10 +28,11 @@ def calc():
         
         else:
              text ="標準体重"
+        xytil =  ytil.standardBMI()   
     except Exception:
         error = True
         msg = "半角数字(整数値)で入力してください"
-    return render_template("view_bmi.html", height_centimeters=height_centimeters, weight=weight, error=error, msg=msg,bmi=ytil.calc_bmi(),text=text)
+    return render_template("view_bmi.html", height_centimeters=height_centimeters, weight=weight, error=error, msg=msg,bmi=ytil.calc_bmi(),text=text,bt=xytil[1],st=xytil[0])
 
 if __name__ == "__main__":
     
