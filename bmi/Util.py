@@ -14,7 +14,9 @@ class Util:
         return self.weight
     
     def calc_bmi(self):  # 整数の引数　身長(cm) 体重(kg)
-        return self.weight / (self.get_meter_height() ** 2)  # BMI = 体重 / 身長(m)^2
+        var = self.weight  / (self.get_meter_height() ** 2)
+        bmi = f"{int(var):.0f}"
+        return int(bmi)
     
     def standardBMI(self):
         return f"{(self.height/100) **2 * 22:.0f}", f"{(self.height/100) **2 * 20:.0f}"
