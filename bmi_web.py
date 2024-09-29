@@ -1,15 +1,23 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from bmi.Util import Util
 from bmi.AISpeech import AISpeech
 app = Flask(__name__)
 # API Keyとリージョン
-speech_key, service_region = KEY,  "japaneast"
+speech_key, service_region = "KEY",  "japaneast"
 Speech = AISpeech(speech_key, service_region, "ja-JP-DaichiNeural")
 # ホーム
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
 
+@app.route("/api/transcribe", methods=["POST"])
+def transcribe():
+    result =  Speech.transcribe()
+    if result.reason is None:
+       return jsonify({"text": "音声認識に失敗しました"})
+    else:
+       return jsonify({"text": result.text.replace("。", "")})
+    
 @app.route("/api/calc", methods=["POST"])
 def calc():
      # エラーフラグとエラーメッセージを初期化
