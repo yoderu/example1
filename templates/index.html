@@ -4,12 +4,42 @@
     <title>BMI計算アプリ</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+       <!-- JavaScript読み込み-->
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <script>
+    $(document).ready(function () {
+        $('#record-button-height').click(function () {
+            $.ajax({
+                url: '/api/transcribe',
+                type: 'POST',
+                success: function (data) {
+                    $('#input-height-text').val(data.text);
+                },
+                error: function () {
+                    alert('音声認識に失敗しました');
+                }
+            });
+        });
+        $('#record-button-weight').click(function () {
+            $.ajax({
+                url: '/api/transcribe',
+                type: 'POST',
+                success: function (data) {
+                    $('#input-weight-text').val(data.text);
+                },
+                error: function () {
+                    alert('音声認識に失敗しました');
+                }
+            });
+        });
+     });
+    </script>
     <h1>BMI計算パラメーター入力</h1>
     <form method="POST" action="/api/calc">
-        <p>身長(cm):<input type="text" name="height_centimeters"></p>
-        <p>体重(kg): <input type="text" name="weight"></p>
+        <p>身長(cm):<input type="text" name="height_centimeters" id="input-height-text"><button type="button" id="record-button-height">音声入力</button></p>
+        <p>体重(kg): <input type="text" name="weight" id="input-weight-text"><button type="button" id="record-button-weight">音声入力</button></p>
         <p>
             <select name="voice">
                 <option value="">--声を選択--</option>
