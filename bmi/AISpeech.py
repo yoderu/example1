@@ -45,6 +45,6 @@ class AISpeech:
             else:
                 # 音声認識失敗
                 return None
-        except:
+        except Exception as e:
             # エラー
             return None

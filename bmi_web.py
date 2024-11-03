@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from bmi.Util import Util
 from bmi.AISpeech import AISpeech
+import os
 app = Flask(__name__)
 # API Keyとリージョン
 speech_key, service_region = "KEY",  "japaneast"
@@ -51,12 +52,20 @@ def calc():
         )  
         Speech.speechSSML(ssml)
         return render_template("view_bmi.html", height_centimeters=height_centimeters, weight=weight, error=error,bmi=tmp,text=text,bt=xytil[1],st=xytil[0])
+    except ZeroDivisionError:
+        error = True 
+        msg = "0は入力できません"
     except Exception as e:
         error = True
         msg = "半角数字(整数値)で入力してください"
-        
+    finally:    
+        return render_template("index.html", error=error, msg=msg)
     return render_template("view_bmi.html", height_centimeters=height_centimeters, weight=weight, error=error, msg=msg)
 
 if __name__ == "__main__":
-    
+    # 現在いるディレクトリを取得する
+    current_folder = os.getcwd()
+    static_folder_path = current_folder + "/static"
+    # flaskに staticフォルダーのパスを設定する
+    app.config["STATIC_FOLDER"] = static_folder_path    
     app.run(debug=True)
